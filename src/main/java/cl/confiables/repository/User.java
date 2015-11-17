@@ -19,9 +19,7 @@ public class User {
     private Long id;
     private String username;
 
-    public User(Long id, String username) {
-        super();
-        this.id = id;
+    public User(String username) {
         this.username = username;
     }
 
@@ -35,4 +33,9 @@ public class User {
 
     public User() {
     } // Only JPA
+
+    @Override
+    public String toString() {
+        return "User [id=" + id + ", username=" + username + "]";
+    }
 }
