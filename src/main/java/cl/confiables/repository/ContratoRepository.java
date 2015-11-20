@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ContractsRepository extends JpaRepository<Contracts, Long>{
+public interface ContratoRepository extends JpaRepository<Contrato, Long>{
 
-	Collection<Contracts> findByUser(Long user);
+	Collection<Contrato> findByUsuarioId(Long usuario);
 }

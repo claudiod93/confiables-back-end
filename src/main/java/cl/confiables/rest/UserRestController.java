@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import cl.confiables.repository.Contracts;
-import cl.confiables.repository.ContractsRepository;
-import cl.confiables.repository.User;
-import cl.confiables.repository.UserRepository;
+import cl.confiables.repository.Contrato;
+import cl.confiables.repository.ContratoRepository;
+import cl.confiables.repository.Usuario;
+import cl.confiables.repository.UsuarioRepository;
 
 /**
  * @author cadiazc
@@ -29,34 +29,34 @@ import cl.confiables.repository.UserRepository;
 @RequestMapping("/users")
 public class UserRestController {
 
-	private UserRepository userRepository;
+	private UsuarioRepository userRepository;
 
-	private ContractsRepository contractsRepository;
+	private ContratoRepository contractsRepository;
 
 	@RequestMapping(method = RequestMethod.POST)
-	ResponseEntity<?> addUser(@RequestBody User user) {
+	ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		userRepository.save(user);
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
 
 	@RequestMapping(value = "/name/{username}")
-	public User getUser(@PathVariable String username) {
-		return userRepository.findByUsername(username).get();
+	public Usuario getUser(@PathVariable String username) {
+		return userRepository.findByNombreUsuario(username).get();
 	}
 
 	@RequestMapping(value = "/id/{userId}")
-	public User getUserById(@PathVariable Long userId) {
+	public Usuario getUserById(@PathVariable Long userId) {
 		return userRepository.findById(userId).get();
 	}
 
 	@RequestMapping(value = "/{userId}/contracts", method = RequestMethod.POST)
 	public ResponseEntity<?> addContracts(@PathVariable Long userId,
-			@RequestBody Contracts contracts) {
+			@RequestBody Contrato contracts) {
 		return this.userRepository
 				.findById(userId)
 				.map(user -> {
-					Contracts result = contractsRepository.save(new Contracts(
-							user, contracts.getProvider(), contracts.getName()));
+					Contrato result = contractsRepository.save(new Contrato(
+							user, contracts.getProveedor(), contracts.getNombre()));
 
 					HttpHeaders httpHeaders = new HttpHeaders();
 					httpHeaders.setLocation(ServletUriComponentsBuilder
@@ -68,13 +68,13 @@ public class UserRestController {
 	}
 
 	@RequestMapping(value = "get/{userId}/contracts")
-	public Collection<Contracts> contractsByUser(@PathVariable Long userId) {
-		return this.contractsRepository.findByUser(userId);
+	public Collection<Contrato> contractsByUser(@PathVariable Long userId) {
+		return this.contractsRepository.findByUsuarioId(userId);
 	}
 
 	@Autowired
-	public UserRestController(UserRepository userRepository,
-			ContractsRepository contractsRepository) {
+	public UserRestController(UsuarioRepository userRepository,
+			ContratoRepository contractsRepository) {
 		this.userRepository = userRepository;
 		this.contractsRepository = contractsRepository;
 	}
