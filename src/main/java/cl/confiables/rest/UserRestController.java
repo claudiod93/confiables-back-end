@@ -56,7 +56,8 @@ public class UserRestController {
 				.findById(userId)
 				.map(user -> {
 					Contrato result = contractsRepository.save(new Contrato(
-							user, contracts.getProveedor(), contracts.getNombre()));
+							user, contracts.getProveedor(), contracts
+									.getNombre()));
 
 					HttpHeaders httpHeaders = new HttpHeaders();
 					httpHeaders.setLocation(ServletUriComponentsBuilder
@@ -70,6 +71,15 @@ public class UserRestController {
 	@RequestMapping(value = "get/{userId}/contracts")
 	public Collection<Contrato> contractsByUser(@PathVariable Long userId) {
 		return this.contractsRepository.findByUsuarioId(userId);
+	}
+
+	@RequestMapping(value = "login/{usuario}")
+	public Usuario login(@PathVariable Usuario usuario) {
+		Usuario user = this.userRepository
+				.findByNombreUsuarioOrMailAndContrasena(
+						usuario.getNombreUsuario(), usuario.getMail(),
+						usuario.getContrasena()).get();
+		return user;
 	}
 
 	@Autowired

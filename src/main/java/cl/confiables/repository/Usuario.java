@@ -44,11 +44,18 @@ public class Usuario {
 	public Usuario() {
 	} // Only JPA
 	
+	// For Login
+	public Usuario(String nombreUsuario, String mail, String contrasena){
+		this.nombreUsuario = nombreUsuario;
+		this.contrasena = contrasena;
+		this.mail = mail;
+	}
+	
 	public Usuario(String nombreUsuario, String contrasena, String nombres,
 			String apellidos, String mail, Long genero, Date fechaNacimiento,
 			String facebook, String twitter, String linkedin, String youtube,
 			Long premium, Set<Contrato> contratos) {
-		super();
+		
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
 		this.nombres = nombres;

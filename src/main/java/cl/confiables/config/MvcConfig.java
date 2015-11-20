@@ -6,6 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 @EnableAutoConfiguration
-@ComponentScan(basePackages = {"cl.confiables.rest"})
+@ComponentScan(basePackages = {"cl.confiables"})
 public class MvcConfig {
 }
