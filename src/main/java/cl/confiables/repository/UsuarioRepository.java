@@ -8,6 +8,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import cl.confiables.repository.domain.Usuario;
+
 /**
  * @author cadiazc
  *

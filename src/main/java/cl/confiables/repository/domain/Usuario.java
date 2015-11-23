@@ -1,16 +1,19 @@
 /**
  * 
  */
-package cl.confiables.repository;
+package cl.confiables.repository.domain;
 
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -41,21 +44,25 @@ public class Usuario {
 	@OneToMany(mappedBy = "usuario")
 	private Set<Contrato> contratos = new HashSet<Contrato>();
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "dato_laborales_id", unique = true, nullable = true, insertable = true, updatable = true)
+	private DatosLaborales datosLaborales;
+
 	public Usuario() {
 	} // Only JPA
-	
+
 	// For Login
-	public Usuario(String nombreUsuario, String mail, String contrasena){
+	public Usuario(String nombreUsuario, String mail, String contrasena) {
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
 		this.mail = mail;
 	}
-	
+
 	public Usuario(String nombreUsuario, String contrasena, String nombres,
 			String apellidos, String mail, Long genero, Date fechaNacimiento,
 			String facebook, String twitter, String linkedin, String youtube,
-			Long premium, Set<Contrato> contratos) {
-		
+			Long premium, Set<Contrato> contratos, DatosLaborales datosLaborales) {
+
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
 		this.nombres = nombres;
@@ -69,9 +76,8 @@ public class Usuario {
 		this.youtube = youtube;
 		this.premium = premium;
 		this.contratos = contratos;
+		this.datosLaborales = datosLaborales;
 	}
-
-
 
 	public String getNombreUsuario() {
 		return nombreUsuario;
@@ -125,5 +131,8 @@ public class Usuario {
 		return contratos;
 	}
 
-	
+	public DatosLaborales getDatosLaborales() {
+		return datosLaborales;
+	}
+
 }

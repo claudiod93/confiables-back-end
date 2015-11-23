@@ -16,10 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import cl.confiables.repository.Contrato;
 import cl.confiables.repository.ContratoRepository;
-import cl.confiables.repository.Usuario;
 import cl.confiables.repository.UsuarioRepository;
+import cl.confiables.repository.domain.Contrato;
+import cl.confiables.repository.domain.Usuario;
 
 /**
  * @author cadiazc
@@ -67,6 +67,8 @@ public class UserRestController {
 							HttpStatus.CREATED);
 				}).get();
 	}
+	
+	
 
 	@RequestMapping(value = "get/{userId}/contracts")
 	public Collection<Contrato> contractsByUser(@PathVariable Long userId) {

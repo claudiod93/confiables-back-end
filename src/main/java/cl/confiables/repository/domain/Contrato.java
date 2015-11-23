@@ -1,7 +1,7 @@
 /**
  * 
  */
-package cl.confiables.repository;
+package cl.confiables.repository.domain;
 
 import java.util.Date;
 
