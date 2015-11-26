@@ -42,12 +42,16 @@ public class Usuario {
 	private Long premium;
 
 	@OneToMany(mappedBy = "usuario")
-	private Set<Contrato> contratos = new HashSet<Contrato>();
+	private Set<Contrato> contratos = new HashSet<>();
 
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "dato_laborales_id", unique = true, nullable = true, insertable = true, updatable = true)
 	private DatosLaborales datosLaborales;
 
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "perfil_id", unique = true, nullable = true, insertable = true, updatable = true)
+	private Perfil perfil;
+	
 	public Usuario() {
 	} // Only JPA
 
@@ -61,7 +65,8 @@ public class Usuario {
 	public Usuario(String nombreUsuario, String contrasena, String nombres,
 			String apellidos, String mail, Long genero, Date fechaNacimiento,
 			String facebook, String twitter, String linkedin, String youtube,
-			Long premium, Set<Contrato> contratos, DatosLaborales datosLaborales) {
+			Long premium, Set<Contrato> contratos, DatosLaborales datosLaborales, 
+			Perfil perfil) {
 
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
@@ -77,6 +82,7 @@ public class Usuario {
 		this.premium = premium;
 		this.contratos = contratos;
 		this.datosLaborales = datosLaborales;
+		this.perfil = perfil;
 	}
 
 	public String getNombreUsuario() {
@@ -135,4 +141,11 @@ public class Usuario {
 		return datosLaborales;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public Perfil getPerfil() {
+		return perfil;
+	}
 }

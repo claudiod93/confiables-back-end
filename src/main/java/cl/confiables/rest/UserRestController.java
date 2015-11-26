@@ -38,7 +38,7 @@ public class UserRestController {
 		userRepository.save(user);
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
-
+	
 	@RequestMapping(value = "/name/{username}")
 	public Usuario getUser(@PathVariable String username) {
 		return userRepository.findByNombreUsuario(username).get();
