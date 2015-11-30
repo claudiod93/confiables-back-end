@@ -19,7 +19,7 @@ import cl.confiables.repository.domain.Usuario;
  *
  */
 @RestController
-//@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/login")
 public class LoginRest {
 

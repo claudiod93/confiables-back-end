@@ -51,7 +51,11 @@ public class Usuario {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "perfil_id", unique = true, nullable = true, insertable = true, updatable = true)
 	private Perfil perfil;
-	
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "direcciones_id", unique = true, nullable = true, insertable = true, updatable = true)
+	private Direcciones direccion;
+
 	public Usuario() {
 	} // Only JPA
 
@@ -65,8 +69,8 @@ public class Usuario {
 	public Usuario(String nombreUsuario, String contrasena, String nombres,
 			String apellidos, String mail, Long genero, Date fechaNacimiento,
 			String facebook, String twitter, String linkedin, String youtube,
-			Long premium, Set<Contrato> contratos, DatosLaborales datosLaborales, 
-			Perfil perfil) {
+			Long premium, Set<Contrato> contratos,
+			DatosLaborales datosLaborales, Perfil perfil, Direcciones direccion) {
 
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
@@ -83,6 +87,7 @@ public class Usuario {
 		this.contratos = contratos;
 		this.datosLaborales = datosLaborales;
 		this.perfil = perfil;
+		this.direccion = direccion;
 	}
 
 	public String getNombreUsuario() {
@@ -148,4 +153,9 @@ public class Usuario {
 	public Perfil getPerfil() {
 		return perfil;
 	}
+
+	public Direcciones getDireccion() {
+		return direccion;
+	}
+
 }
