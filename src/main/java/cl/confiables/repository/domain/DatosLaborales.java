@@ -4,15 +4,10 @@
 package cl.confiables.repository.domain;
 
 
-import java.util.Set;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import java.util.HashSet;
 
 /**
  * @author claudioantonio
@@ -26,15 +21,16 @@ public class DatosLaborales {
 	private Long id;
 	private String correo;
 	
-	@OneToMany(mappedBy = "datosLaborles")
-	private Set<Categoria> categorias = new HashSet<Categoria>();
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "categoria_id", unique = true, nullable = true, insertable = true, updatable = true)
+	private Long categoria;
 
 	public DatosLaborales() { // Only JPA
 	}
 
-	public DatosLaborales(String correo, Set<Categoria> categorias) {
+	public DatosLaborales(String correo, Long categoria) {
 		this.correo = correo;
-		this.categorias = categorias;
+		this.categoria = categoria;
 	}
 
 	public Long getId() {
@@ -45,7 +41,7 @@ public class DatosLaborales {
 		return correo;
 	}
 
-	public Set<Categoria> getCategorias() {
-		return categorias;
+	public Long getCategoria() {
+		return categoria;
 	}
 }

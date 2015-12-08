@@ -157,5 +157,17 @@ public class Usuario {
 	public Direcciones getDireccion() {
 		return direccion;
 	}
-
+	
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombreUsuario=" + nombreUsuario
+				+ ", contrasena=" + contrasena + ", nombres=" + nombres
+				+ ", apellidos=" + apellidos + ", mail=" + mail + ", genero="
+				+ genero + ", fechaNacimiento=" + fechaNacimiento
+				+ ", facebook=" + facebook + ", twitter=" + twitter
+				+ ", linkedin=" + linkedin + ", youtube=" + youtube
+				+ ", premium=" + premium + ", contratos=" + contratos
+				+ ", datosLaborales=" + datosLaborales + ", perfil=" + perfil
+				+ ", direccion=" + direccion + "]";
+	}
 }

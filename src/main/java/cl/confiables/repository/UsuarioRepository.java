@@ -3,6 +3,7 @@
  */
 package cl.confiables.repository;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -21,5 +22,9 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
 	Optional<Usuario> findById(Long id);
 
+	//Login application
 	Optional<Usuario> findByNombreUsuarioOrMailAndContrasena(String nombreUsuario, String mail, String contrasena);
+	
+	// User by category's, for search 
+	Collection<Usuario> findByDatosLaboralesCategoria(Long categoria);
 }

@@ -22,7 +22,7 @@ public class Contrato {
 	@Id
 	@GeneratedValue
 	private Long id;
-	private String proveedor;
+	private Long proveedor;
 	private String nombre;
 	private String descripcion;
 	private Date fechaInicio;
@@ -42,7 +42,7 @@ public class Contrato {
 	public Contrato() {
 	} // Only JPA
 
-	public Contrato(String proveedor, String nombre, String descripcion,
+	public Contrato(Long proveedor, String nombre, String descripcion,
 			Date fechaInicio, Date fechaFin, String clausulaTermino,
 			Long evaluacion, Long valorServicio, Long comision, Long pendiente,
 			Long aceptado, Long terminado, Usuario usuario) {
@@ -61,7 +61,7 @@ public class Contrato {
 		this.usuario = usuario;
 	}
 	
-	public Contrato(Usuario usuario, String proveedor, String nombre){
+	public Contrato(Usuario usuario, Long proveedor, String nombre){
 		this.usuario = usuario;
 		this.proveedor = proveedor;
 		this.nombre = nombre;
@@ -71,7 +71,7 @@ public class Contrato {
 		return id;
 	}
 
-	public String getProveedor() {
+	public Long getProveedor() {
 		return proveedor;
 	}
 

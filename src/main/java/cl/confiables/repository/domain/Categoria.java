@@ -6,9 +6,6 @@ package cl.confiables.repository.domain;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  * @author claudioantonio
@@ -22,18 +19,13 @@ public class Categoria {
 	private Long id;
 	private String nombre;
 
-	@ManyToOne
-	@JsonIgnore
-	private DatosLaborales datosLaborles;
-
+	
 	public Categoria() {
 		// Only JPA
 	}
 
-	public Categoria(String nombre, 
-			DatosLaborales datosLaborales) {
+	public Categoria(String nombre) {
 		this.nombre = nombre;
-		this.datosLaborles = datosLaborales;
 	}
 
 	public Long getId() {
@@ -42,9 +34,5 @@ public class Categoria {
 
 	public String getNombre() {
 		return nombre;
-	}
-
-	public DatosLaborales getDatosLaborles() {
-		return datosLaborles;
 	}
 }

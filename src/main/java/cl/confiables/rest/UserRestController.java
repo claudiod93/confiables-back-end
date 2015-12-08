@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,16 +26,17 @@ import cl.confiables.repository.domain.Usuario;
  *
  */
 @RestController
-@CrossOrigin(origins = "http://localhost:9000")
+//@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/users")
 public class UserRestController {
 
 	private UsuarioRepository userRepository;
 
 	private ContratoRepository contractsRepository;
-
+	
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> addUser(@RequestBody Usuario user) {
+		System.out.println("user -- > " + user.toString());
 		userRepository.save(user);
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
@@ -72,18 +72,23 @@ public class UserRestController {
 	
 	
 
-	@RequestMapping(value = "get/{userId}/contracts")
+	@RequestMapping(value = "/get/{userId}/contracts")
 	public Collection<Contrato> contractsByUser(@PathVariable Long userId) {
 		return this.contractsRepository.findByUsuarioId(userId);
 	}
 
-	@RequestMapping(value = "login/{usuario}")
+	@RequestMapping(value = "/login/{usuario}")
 	public Usuario login(@PathVariable Usuario usuario) {
 		Usuario user = this.userRepository
 				.findByNombreUsuarioOrMailAndContrasena(
 						usuario.getNombreUsuario(), usuario.getMail(),
 						usuario.getContrasena()).get();
 		return user;
+	}
+	
+	@RequestMapping(value = "/category/{category}")
+	public Collection<Usuario> findByCateory(@PathVariable Long category){
+		return userRepository.findByDatosLaboralesCategoria(category);
 	}
 
 	@Autowired
