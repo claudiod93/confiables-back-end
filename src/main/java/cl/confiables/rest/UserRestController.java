@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import cl.confiables.repository.ContratoRepository;
+import cl.confiables.repository.DatosLaboralesRepository;
+import cl.confiables.repository.ExperienciaRepository;
 import cl.confiables.repository.UsuarioRepository;
 import cl.confiables.repository.domain.Contrato;
+import cl.confiables.repository.domain.DatosLaborales;
+import cl.confiables.repository.domain.Experiencia;
 import cl.confiables.repository.domain.Usuario;
 
 /**
@@ -33,6 +37,10 @@ public class UserRestController {
 	private UsuarioRepository userRepository;
 
 	private ContratoRepository contractsRepository;
+	
+	private DatosLaboralesRepository dlRepository;
+
+	private ExperienciaRepository experienciaRepository;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> addUser(@RequestBody Usuario user) {
@@ -70,6 +78,29 @@ public class UserRestController {
 				}).get();
 	}
 	
+	@RequestMapping(value = "/{id}/addexperiencia", method = RequestMethod.POST)
+	public ResponseEntity<?> addExperienci(@PathVariable Long id,
+			@RequestBody Experiencia experiencia) {
+		System.out.println("Datos Laborales : " + dlRepository.findById(1L));
+		return this.userRepository
+				.findById(id)
+				.map(dl -> {
+					Experiencia result = experienciaRepository.save(experiencia);
+
+					HttpHeaders httpHeaders = new HttpHeaders();
+					httpHeaders.setLocation(ServletUriComponentsBuilder
+							.fromCurrentRequest().path("/{id}")
+							.buildAndExpand(result.getId()).toUri());
+					return new ResponseEntity<>(null, httpHeaders,
+							HttpStatus.CREATED);
+				}).get();
+	}
+	
+	@RequestMapping(value = "/datoslaborales/{correo}")
+	public DatosLaborales getDatosLaborales(@PathVariable String correo){
+		return dlRepository.findByCorreo(correo).get();
+	}
+	
 	
 
 	@RequestMapping(value = "/get/{userId}/contracts")
@@ -90,11 +121,14 @@ public class UserRestController {
 	public Collection<Usuario> findByCateory(@PathVariable Long category){
 		return userRepository.findByDatosLaboralesCategoria(category);
 	}
-
+	
 	@Autowired
 	public UserRestController(UsuarioRepository userRepository,
-			ContratoRepository contractsRepository) {
+			ContratoRepository contractsRepository, DatosLaboralesRepository dlRepository,
+			ExperienciaRepository experienciaRepository) {
 		this.userRepository = userRepository;
 		this.contractsRepository = contractsRepository;
+		this.dlRepository = dlRepository;
+		this.experienciaRepository = experienciaRepository;
 	}
 }
