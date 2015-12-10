@@ -4,54 +4,40 @@
 package cl.confiables.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import cl.confiables.repository.DatosLaboralesRepository;
-import cl.confiables.repository.ExperienciaRepository;
-import cl.confiables.repository.domain.Experiencia;
+import cl.confiables.repository.UsuarioRepository;
+import cl.confiables.repository.domain.Usuario;
 
 /**
  * @author claudioantonio
  *
  */
 @RestController
-//@RequestMapping("/datos-laborales")
+@CrossOrigin(origins = "http://localhost:9000")
+@RequestMapping("/datoslaborales")
 public class DatosLaboralesRestController {
 
-	private DatosLaboralesRepository dlRepository;
-
-	private ExperienciaRepository experienciaRepository;
-
-//	@RequestMapping(value = "/{id}/add-expreciencia", method = RequestMethod.POST)
-	public ResponseEntity<?> addExperienci(@PathVariable Long id,
-			@RequestBody Experiencia expeiencia) {
-
-		return dlRepository
-				.findById(id)
-				.map(dl -> {
-					Experiencia result = experienciaRepository.save(expeiencia);
-
-					HttpHeaders httpHeaders = new HttpHeaders();
-					httpHeaders.setLocation(ServletUriComponentsBuilder
-							.fromCurrentRequest().path("/{id}")
-							.buildAndExpand(result.getId()).toUri());
-					return new ResponseEntity<>(null, httpHeaders,
-							HttpStatus.CREATED);
-				}).get();
+	private UsuarioRepository userRepository;
+	
+	@RequestMapping(value = "/byuserid/{id}", method = RequestMethod.POST)
+	public ResponseEntity<?> addLaborales(@PathVariable Long id, @RequestBody Usuario user){
+		Usuario usuario = userRepository.findById(id).get();
+		usuario.setDatosLaborales(user.getDatosLaborales());
+		userRepository.saveAndFlush(usuario);
+		
+		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
-
+	
 	@Autowired
-	public DatosLaboralesRestController(DatosLaboralesRepository dlRepository,
-			ExperienciaRepository experienciaRepository) {
-		this.dlRepository = dlRepository;
-		this.experienciaRepository = experienciaRepository;
+	public DatosLaboralesRestController(UsuarioRepository userRepository){
+		this.userRepository = userRepository;
 	}
 }

@@ -6,23 +6,16 @@ package cl.confiables.rest;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import cl.confiables.repository.ContratoRepository;
-import cl.confiables.repository.DatosLaboralesRepository;
-import cl.confiables.repository.ExperienciaRepository;
 import cl.confiables.repository.UsuarioRepository;
-import cl.confiables.repository.domain.Contrato;
-import cl.confiables.repository.domain.DatosLaborales;
-import cl.confiables.repository.domain.Experiencia;
 import cl.confiables.repository.domain.Usuario;
 
 /**
@@ -30,91 +23,28 @@ import cl.confiables.repository.domain.Usuario;
  *
  */
 @RestController
-//@CrossOrigin(origins = "http://localhost:9000")
+@CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/users")
 public class UserRestController {
 
 	private UsuarioRepository userRepository;
-
-	private ContratoRepository contractsRepository;
-	
-	private DatosLaboralesRepository dlRepository;
-
-	private ExperienciaRepository experienciaRepository;
 	
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		System.out.println("user -- > " + user.toString());
 		userRepository.save(user);
+		
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/name/{username}")
-	public Usuario getUser(@PathVariable String username) {
-		return userRepository.findByNombreUsuario(username).get();
-	}
-
 	@RequestMapping(value = "/id/{userId}")
 	public Usuario getUserById(@PathVariable Long userId) {
 		return userRepository.findById(userId).get();
 	}
 
-	@RequestMapping(value = "/{userId}/contracts", method = RequestMethod.POST)
-	public ResponseEntity<?> addContracts(@PathVariable Long userId,
-			@RequestBody Contrato contracts) {
-		return this.userRepository
-				.findById(userId)
-				.map(user -> {
-					Contrato result = contractsRepository.save(new Contrato(
-							user, contracts.getProveedor(), contracts
-									.getNombre()));
-
-					HttpHeaders httpHeaders = new HttpHeaders();
-					httpHeaders.setLocation(ServletUriComponentsBuilder
-							.fromCurrentRequest().path("/{id}")
-							.buildAndExpand(result.getId()).toUri());
-					return new ResponseEntity<>(null, httpHeaders,
-							HttpStatus.CREATED);
-				}).get();
-	}
-	
-	@RequestMapping(value = "/{id}/addexperiencia", method = RequestMethod.POST)
-	public ResponseEntity<?> addExperienci(@PathVariable Long id,
-			@RequestBody Experiencia experiencia) {
-		System.out.println("Datos Laborales : " + dlRepository.findById(1L));
-		return this.userRepository
-				.findById(id)
-				.map(dl -> {
-					Experiencia result = experienciaRepository.save(experiencia);
-
-					HttpHeaders httpHeaders = new HttpHeaders();
-					httpHeaders.setLocation(ServletUriComponentsBuilder
-							.fromCurrentRequest().path("/{id}")
-							.buildAndExpand(result.getId()).toUri());
-					return new ResponseEntity<>(null, httpHeaders,
-							HttpStatus.CREATED);
-				}).get();
-	}
-	
-	@RequestMapping(value = "/datoslaborales/{correo}")
-	public DatosLaborales getDatosLaborales(@PathVariable String correo){
-		return dlRepository.findByCorreo(correo).get();
-	}
-	
-	
-
-	@RequestMapping(value = "/get/{userId}/contracts")
-	public Collection<Contrato> contractsByUser(@PathVariable Long userId) {
-		return this.contractsRepository.findByUsuarioId(userId);
-	}
-
-	@RequestMapping(value = "/login/{usuario}")
-	public Usuario login(@PathVariable Usuario usuario) {
-		Usuario user = this.userRepository
-				.findByNombreUsuarioOrMailAndContrasena(
-						usuario.getNombreUsuario(), usuario.getMail(),
-						usuario.getContrasena()).get();
-		return user;
+	@RequestMapping(value = "/all")
+	public Collection<Usuario> getAllUsers(){
+		return userRepository.findAll();
 	}
 	
 	@RequestMapping(value = "/category/{category}")
@@ -123,12 +53,7 @@ public class UserRestController {
 	}
 	
 	@Autowired
-	public UserRestController(UsuarioRepository userRepository,
-			ContratoRepository contractsRepository, DatosLaboralesRepository dlRepository,
-			ExperienciaRepository experienciaRepository) {
+	public UserRestController(UsuarioRepository userRepository) {
 		this.userRepository = userRepository;
-		this.contractsRepository = contractsRepository;
-		this.dlRepository = dlRepository;
-		this.experienciaRepository = experienciaRepository;
 	}
 }

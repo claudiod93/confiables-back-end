@@ -21,7 +21,7 @@ import cl.confiables.repository.domain.Usuario;
 @RestController
 @CrossOrigin(origins = "http://localhost:9000")
 @RequestMapping("/login")
-public class LoginRest {
+public class LoginRestController {
 
 	private UsuarioRepository userRepository;
 
@@ -46,7 +46,7 @@ public class LoginRest {
 	}
 
 	@Autowired
-	public LoginRest(UsuarioRepository userRepository) {
+	public LoginRestController(UsuarioRepository userRepository) {
 		this.userRepository = userRepository;
 	}
 }

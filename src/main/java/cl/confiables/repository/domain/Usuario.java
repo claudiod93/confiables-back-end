@@ -3,6 +3,7 @@
  */
 package cl.confiables.repository.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,8 +23,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
-public class Usuario {
+public class Usuario implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -158,6 +163,74 @@ public class Usuario {
 		return direccion;
 	}
 	
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNombreUsuario(String nombreUsuario) {
+		this.nombreUsuario = nombreUsuario;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public void setGenero(Long genero) {
+		this.genero = genero;
+	}
+
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+
+	public void setTwitter(String twitter) {
+		this.twitter = twitter;
+	}
+
+	public void setLinkedin(String linkedin) {
+		this.linkedin = linkedin;
+	}
+
+	public void setYoutube(String youtube) {
+		this.youtube = youtube;
+	}
+
+	public void setPremium(Long premium) {
+		this.premium = premium;
+	}
+
+	public void setContratos(Set<Contrato> contratos) {
+		this.contratos = contratos;
+	}
+
+	public void setDatosLaborales(DatosLaborales datosLaborales) {
+		this.datosLaborales = datosLaborales;
+	}
+
+	public void setPerfil(Perfil perfil) {
+		this.perfil = perfil;
+	}
+
+	public void setDireccion(Direcciones direccion) {
+		this.direccion = direccion;
+	}
+
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", nombreUsuario=" + nombreUsuario
