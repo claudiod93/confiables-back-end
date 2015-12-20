@@ -38,9 +38,7 @@ public class ContratosRestController {
 		return this.userRepository
 				.findById(userId)
 				.map(user -> {
-					Contrato result = contractsRepository.save(new Contrato(
-							user, contracts.getProveedor(), contracts
-									.getNombre()));
+					Contrato result = contractsRepository.save(contracts);
 
 					HttpHeaders httpHeaders = new HttpHeaders();
 					httpHeaders.setLocation(ServletUriComponentsBuilder

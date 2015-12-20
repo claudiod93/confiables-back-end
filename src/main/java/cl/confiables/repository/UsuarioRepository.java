@@ -14,6 +14,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import cl.confiables.repository.domain.Usuario;
+import java.util.Set;
+import java.util.List;
 
 /**
  * @author cadiazc
@@ -33,6 +35,8 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 	Collection<Usuario> findByDatosLaboralesCategoria(Long categoria);
 	
 	Collection<Usuario> findByDireccionIdAndDatosLaboralesCategoria(Long idDireccion, Long idCategoria);
+	
+	Collection<Usuario> findByContratosProveedorAndContratosPendiente(Long proveedor, Long pendiente);
 	
 	@Modifying
 	@Transactional

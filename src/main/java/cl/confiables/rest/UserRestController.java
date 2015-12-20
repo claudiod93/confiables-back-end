@@ -37,6 +37,11 @@ public class UserRestController {
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
 	
+	@RequestMapping(value = "/pendientes/{proveedor}/{pendiente}")
+	public Collection<Usuario> userPendientes(@PathVariable Long proveedor,@PathVariable Long pendiente){
+		return userRepository.findByContratosProveedorAndContratosPendiente(proveedor, pendiente);
+	}
+	
 	@RequestMapping(value = "/id/{userId}")
 	public Usuario getUserById(@PathVariable Long userId) {
 		return userRepository.findById(userId).get();

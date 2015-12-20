@@ -45,6 +45,7 @@ public class Usuario implements Serializable{
 	private String linkedin;
 	private String youtube;
 	private Long premium;
+	private String imagen;
 
 	@OneToMany(mappedBy = "usuario")
 	private Set<Contrato> contratos = new HashSet<>();
@@ -75,7 +76,8 @@ public class Usuario implements Serializable{
 			String apellidos, String mail, Long genero, Date fechaNacimiento,
 			String facebook, String twitter, String linkedin, String youtube,
 			Long premium, Set<Contrato> contratos,
-			DatosLaborales datosLaborales, Perfil perfil, Direcciones direccion) {
+			DatosLaborales datosLaborales, Perfil perfil, Direcciones direccion, 
+			String imagen) {
 
 		this.nombreUsuario = nombreUsuario;
 		this.contrasena = contrasena;
@@ -93,6 +95,7 @@ public class Usuario implements Serializable{
 		this.datosLaborales = datosLaborales;
 		this.perfil = perfil;
 		this.direccion = direccion;
+		this.imagen = imagen;
 	}
 
 	public String getNombreUsuario() {
@@ -229,6 +232,14 @@ public class Usuario implements Serializable{
 
 	public void setDireccion(Direcciones direccion) {
 		this.direccion = direccion;
+	}
+	
+	public String getImagen() {
+		return imagen;
+	}
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	@Override
