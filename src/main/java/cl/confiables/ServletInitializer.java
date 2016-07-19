@@ -1,9 +1,8 @@
 package cl.confiables;
 
+import cl.confiables.config.ConfiablesBackApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
-
-import cl.confiables.config.ConfiablesBackApplication;
 
 public class ServletInitializer extends SpringBootServletInitializer {
 

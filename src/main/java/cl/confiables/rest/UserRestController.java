@@ -28,7 +28,12 @@ import cl.confiables.repository.domain.Usuario;
 public class UserRestController {
 
 	private UsuarioRepository userRepository;
-	
+
+	/**
+	 * Metodo para crear usuarios
+	 * @param user
+	 * @return
+	 */
 	@RequestMapping(method = RequestMethod.POST)
 	ResponseEntity<?> addUser(@RequestBody Usuario user) {
 		System.out.println("user -- > " + user.toString());
@@ -36,21 +41,34 @@ public class UserRestController {
 		
 		return new ResponseEntity<>(null, null, HttpStatus.CREATED);
 	}
+
+	/**
+	 * Metodo para obtener un usario por id
+	 * @param userId
+	 * @return
+	 */
+	@RequestMapping(value = "/id/{userId}")
+	public Usuario getUserById(@PathVariable Long userId) {
+		return userRepository.findById(userId).get();
+	}
+
+	/**
+	 * Obiente todos los usuario sin criterio
+	 * @return
+	 */
+	@RequestMapping(value = "/all")
+	public Collection<Usuario> getAllUsers(){
+		return userRepository.findAll();
+	}
 	
 	@RequestMapping(value = "/pendientes/{proveedor}/{pendiente}")
 	public Collection<Usuario> userPendientes(@PathVariable Long proveedor,@PathVariable Long pendiente){
 		return userRepository.findByContratosProveedorAndContratosPendiente(proveedor, pendiente);
 	}
 	
-	@RequestMapping(value = "/id/{userId}")
-	public Usuario getUserById(@PathVariable Long userId) {
-		return userRepository.findById(userId).get();
-	}
 
-	@RequestMapping(value = "/all")
-	public Collection<Usuario> getAllUsers(){
-		return userRepository.findAll();
-	}
+
+
 	
 	@RequestMapping(value = "/category/{category}")
 	public Collection<Usuario> findByCateory(@PathVariable Long category){

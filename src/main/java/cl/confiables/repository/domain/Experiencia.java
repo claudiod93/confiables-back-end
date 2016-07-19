@@ -3,6 +3,7 @@
  */
 package cl.confiables.repository.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -17,7 +18,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 @Entity
-public class Experiencia {
+public class Experiencia implements Serializable{
 
 	@GeneratedValue
 	@Id

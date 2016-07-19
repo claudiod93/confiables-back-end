@@ -3,6 +3,7 @@
  */
 package cl.confiables.repository.domain;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import javax.persistence.OneToOne;
  *
  */
 @Entity
-public class DatosLaborales {
+public class DatosLaborales implements Serializable {
 
 	@Id
 	@GeneratedValue
